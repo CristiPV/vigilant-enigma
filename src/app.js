@@ -1,14 +1,13 @@
-const express = require('express');
-const http = require('http');
-const dotenv = require('dotenv');
+import express from 'express';
+import { createServer } from 'http';
+import 'dotenv/config';
 
-// Loading environment variables;
-dotenv.config();
+// Environment variables
 const SERVER_PORT = process.env.SERVER_PORT || 5000;
 
 // Creating the server
 const app = express();
-const httpServer = http.createServer(app);
+const httpServer = createServer(app);
 
 // Routes
 app.get('/', (req, res) => {
