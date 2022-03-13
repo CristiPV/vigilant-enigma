@@ -5,8 +5,8 @@ class Length {
    * @param {String} system The system of said measure (Metric or Imperial)
    */
   constructor(measure, system) {
-    this.measure = parseFloat(Number(measure).toFixed(2));
-    this.system = this.isValidSystem(system) || "Metric";
+    this.measure = this.#isPositiveMeasure(measure) ? parseFloat(Number(measure).toFixed(2)) : 0;
+    this.system = this.#isValidSystem(system) ? system : "Metric";
   }
 
   /**
@@ -15,9 +15,9 @@ class Length {
    */
   convert() {
     if (this.system === "Metric") {
-      return (this.measure * 0.39).toFixed(2);
+      return Number((this.measure / 2.54).toFixed(2));
     }
-    return (this.measure * 2.54).toFixed(2);
+    return Number((this.measure * 2.54).toFixed(2));
   }
 
   /**
@@ -29,11 +29,20 @@ class Length {
    * @param {String} system The system of measure (Metric or Imperial)
    * @returns {boolean} Whether the system is valid or not.
    */
-  isValidSystem(system) {
+  #isValidSystem(system) {
     if (system === "Metric" || system === "Imperial") {
       return true;
     }
     return false;
+  }
+
+  /**
+   * Checks if the measure is a positive number.
+   * @param {Number} measure The numeric measure to convert with up to two decimals.
+   * @returns Whether the measure is positive or not
+   */
+  #isPositiveMeasure(measure) {
+      return Number(measure) >= 0 ? true : false;
   }
 }
 

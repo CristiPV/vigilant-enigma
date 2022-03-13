@@ -23,7 +23,10 @@ app.get("/convert/length", (req, res) => {
   const lengthToConvert = new Length(measure, system);
 
   res.send({
-    original: { measure, system },
+    original: {
+      measure: lengthToConvert.measure,
+      system: lengthToConvert.system,
+    },
     converted: lengthToConvert.convert(),
   });
 });
